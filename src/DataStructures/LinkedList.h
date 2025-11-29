@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include"Patient.h"
+#include<../Patient.h>
 
 class Node{
     public:
@@ -38,7 +38,7 @@ class HistoryList {
         }
         Node* temp=head;
         while(temp!=nullptr){
-            temp->patient->info();
+            temp->patient->getInfo();
             temp=temp->next;
         }
 
