@@ -15,6 +15,9 @@ public:
 	// constructor
 	Patient(string name, int severity, int id) : name(name), severity(severity), id(id) {}
 
+	// default constructor
+	Patient() {}
+
 	// getter and setter
 	string getName() { return name; }
 	void setName(string new_name) { name = new_name; }
