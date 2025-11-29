@@ -25,7 +25,7 @@ public:
     void setSeverity(int sev) { severity = sev; }
 
 
-	void info() const;
+	void getInfo() const;
 
 };
 
