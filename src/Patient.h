@@ -32,7 +32,6 @@ public:
         info += "Name: " + name;
         info += "Severity: " + std::to_string(severity);
         info += "ID: " + std::to_string(id);
-
         return info;
     }
 
