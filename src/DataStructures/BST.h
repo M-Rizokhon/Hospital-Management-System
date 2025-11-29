@@ -207,8 +207,6 @@ void BST::printPostOrder() {
 
 
 
-
-
 // Delete the record of a patient
 // who is served first
 void BST::deletePatientRecord() {
