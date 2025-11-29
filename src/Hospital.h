@@ -49,5 +49,6 @@ void Hospital::register_BST(Patient p) {
 // patient from the BST
 void Hospital::delete_BST() {
     
+
 }
 

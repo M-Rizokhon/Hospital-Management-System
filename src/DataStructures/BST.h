@@ -222,3 +222,4 @@ void BST::deletePatientRecord() {
     }
     remove(root->data);
 }
+
