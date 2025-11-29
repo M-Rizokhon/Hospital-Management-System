@@ -25,3 +25,11 @@ class Hospital {
     
         // consult patient
     };
+
+	void Hospital::add_to_history(Patient p){
+		History.addHistory(&p);
+	}
+
+	void Hospital::display_history(){
+		History.print();
+	}
