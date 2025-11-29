@@ -1,31 +1,38 @@
 #pragma once
 #include <string>
+#include <iostream>
+using namespace std;
 // implementation of a patient class
-
-
 
 class Patient {
 private:
-	std::string name;
+	string name;
 	int severity;
 	int id;
 
-
 public:
+
 	// constructor
-	Patient(std::string name, int severity, int id) : name(name), severity(severity), id(id) {}
+	Patient(string name, int severity, int id) : name(name), severity(severity), id(id) {}
 
-	std::string getName() const { return name; }
-	void setName(std::string new_name) { name = new_name; }
+	// getter and setter
+	string getName() { return name; }
+	void setName(string new_name) { name = new_name; }
 
-	int getID() const { return id; }
+	int getID() { return id; }
 	void setID(int new_id) { id = new_id; }
 
-    int getSeverity() const { return severity; }
-    void setSeverity(int sev) { severity = sev; }
+	int getSeverity() const { return severity; }
+	void setSeverity(int sev) { severity = sev; }
 
-
-	void getInfo() const;
+	// getInfo
+	void getInfo() {
+		cout << "--- Patient Information ---" << endl;
+		cout << "ID:        " << id << endl;
+		cout << "Name:      " << name << endl;
+		cout << "Severity:  " << severity << endl;
+		cout << "---------------------------" << endl;
+	}
 
 };
 
