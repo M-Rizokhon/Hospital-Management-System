@@ -9,14 +9,18 @@ private:
 	string name;
 	int severity;
 	int id;
-
+	static int SerializeID;
 public:
-
 	// constructor
-	Patient(string name, int severity, int id) : name(name), severity(severity), id(id) {}
+	Patient(string name, int severity) {
+		this->name = name;
+		this->severity = severity;
+		SerializeID++;
+		this->id = SerializeID;
+	}
 
-	// default constructor
-	Patient() {}
+	//// default constructor
+	//Patient() {}
 
 	// getter and setter
 	string getName() { return name; }
@@ -37,16 +41,14 @@ public:
 		cout << "---------------------------" << endl;
 	}
 
-    
+
 
 	std::string getPatientInfo() const {
-        std::string info = "";
-        info += "Name: " + name;
-        info += "Severity: " + std::to_string(severity);
-        info += "ID: " + std::to_string(id);
-        return info;
-    }
+		std::string info = "";
+		info += "Name: " + name;
+		info += "Severity: " + std::to_string(severity);
+		info += "ID: " + std::to_string(id);
+		return info;
+	}
 };
-
-
-
+int Patient::SerializeID = 0;
