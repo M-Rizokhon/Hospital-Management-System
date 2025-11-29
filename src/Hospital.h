@@ -47,7 +47,7 @@ void Hospital::register_BST(Patient p) {
 
 // delete the record of a high-priority (severity)
 // patient from the BST
-void Hospital::delete_BST(Patient p) {
-    priority_patients.remove(p);
+void Hospital::delete_BST() {
+    
 }
 
