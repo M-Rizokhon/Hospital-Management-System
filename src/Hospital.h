@@ -12,10 +12,12 @@ class Hospital {
          LinkedList History;
          BST priority_patients;
          CircularQueue ordinary_patients;
+
+         // core private functions
          void register_queue(Patient p);
-         void delete_queue();
+         void delete_queue(Patient p);
          void register_BST(Patient p);
-         void delete_BST();
+         void delete_BST(Patient p);
     
     public:
         void add_to_history(Patient p);
@@ -24,4 +26,19 @@ class Hospital {
         void delete_patient();
     
         // consult patient
-    };
+};
+
+
+// register a new high-priority (severity) 
+// patient to BST
+void Hospital::register_BST(Patient p) {
+    priority_patients.insert(p);
+}
+
+
+// delete the record of a high-priority (severity)
+// patient from the BST
+void Hospital::delete_BST(Patient p) {
+    priority_patients.remove(p);
+}
+
