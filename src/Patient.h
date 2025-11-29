@@ -34,14 +34,15 @@ public:
 		cout << "---------------------------" << endl;
 	}
 
-    std::string getPatientInfo() const {
+    
+
+	std::string getPatientInfo() const {
         std::string info = "";
         info += "Name: " + name;
         info += "Severity: " + std::to_string(severity);
         info += "ID: " + std::to_string(id);
         return info;
     }
-
 };
 
 
