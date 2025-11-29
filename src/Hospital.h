@@ -26,7 +26,7 @@ class Hospital {
         void delete_patient();
 
         // display patient
-        void display_patient();
+        void display_patients();
     
         // consult patient
 
@@ -84,5 +84,13 @@ void Hospital::delete_patient() {
         delete_BST();
     }
 }
+// display patients
+void Hospital::display_patients(){
+    std::cout << "\n--- Displaying Ordinary Patients ---" << std::endl;
+    
+    // Call the display method of the CircularQueue object
+    ordinary_patients.display();
 
+    std::cout << "------------------------------------" << std::endl;
+}
 
