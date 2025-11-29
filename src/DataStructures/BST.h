@@ -40,6 +40,8 @@ public:
     void printPreorder();
     void printInorder();
     void printPostOrder();
+
+    void deletePatientRecord();
 };
 
 
@@ -205,3 +207,20 @@ void BST::printPostOrder() {
 
 
 
+
+
+// Delete the record of a patient
+// who is served first
+void BST::deletePatientRecord() {
+    if (root->right == nullptr) {
+        Node* temp = root;
+        root = root->left;
+        delete temp;
+        return;
+    }
+
+    while (root && root->data.getID() != root->right->data.getID()) {
+        root = root->right;
+    }
+    remove(root->data);
+}
