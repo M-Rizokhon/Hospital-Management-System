@@ -48,8 +48,7 @@ void Hospital::register_BST(Patient p) {
 // delete the record of a high-priority (severity)
 // patient from the BST
 void Hospital::delete_BST() {
-    
-
+    priority_patients.deletePatientRecord();
 }
 
 // register a new (FIFO) 
