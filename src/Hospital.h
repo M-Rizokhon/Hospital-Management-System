@@ -24,6 +24,9 @@ class Hospital {
         void display_history();
         void register_patient(Patient p);
         void delete_patient();
+
+        // display patient
+        void display_patient();
     
         // consult patient
 
