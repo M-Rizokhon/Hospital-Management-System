@@ -13,10 +13,10 @@ class Node{
     }
 };
 
-class HistoryList {
+class LinkedList {
     public:
     Node* head , *tail;
-    HistoryList(){
+    LinkedList(){
         head=tail=nullptr;
     }
 
@@ -46,7 +46,7 @@ class HistoryList {
     }
 
     // destructor 
-    ~HistoryList(){
+    ~LinkedList(){
         Node* temp=head;
         while(temp!=nullptr){
             Node*next=temp->next;
