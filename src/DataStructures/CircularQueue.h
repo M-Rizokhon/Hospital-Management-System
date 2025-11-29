@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 using namespace std;
-# include <..Patient.h>
+#include "../Patient.h"
 // Node
 class Node {
 public:
