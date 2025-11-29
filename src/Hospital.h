@@ -51,3 +51,14 @@ void Hospital::delete_BST() {
     
 }
 
+// register a new (FIFO) 
+// patient to Queue
+void Hospital::register_queue(Patient p){
+	ordinary_patients.enqueue(p);
+}
+// delete the record (FIFO) 
+// patient from the Queue
+void Hospital::delete_queue() {
+	ordinary_patients.dequeue();
+}
+
