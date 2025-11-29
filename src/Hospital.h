@@ -37,13 +37,11 @@ void Hospital::display_history(){
 	History.print();
 }
 
-
 // register a new high-priority (severity) 
 // patient to BST
 void Hospital::register_BST(Patient p) {
     priority_patients.insert(p);
 }
-
 
 // delete the record of a high-priority (severity)
 // patient from the BST
@@ -56,9 +54,32 @@ void Hospital::delete_BST() {
 void Hospital::register_queue(Patient p){
 	ordinary_patients.enqueue(p);
 }
+
 // delete the record (FIFO) 
 // patient from the Queue
 void Hospital::delete_queue() {
 	ordinary_patients.dequeue();
 }
+
+
+
+// register a new patient according 
+// to their illness severity
+void Hospital::register_patient(Patient p) {
+    if (p.getSeverity() >= 9) 
+        register_BST(p);
+    else 
+        register_queue(p);
+}
+
+
+// delete a patient record
+void Hospital::delete_patient() {
+    if (priority_patients.isEmpty()) {
+        delete_queue();
+    } else {
+        delete_BST();
+    }
+}
+
 

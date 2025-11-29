@@ -36,6 +36,7 @@ public:
     void insert(Patient key);
     void remove(Patient key);
     bool search(Patient key);
+    bool isEmpty();
 
     void printPreorder();
     void printInorder();
@@ -47,6 +48,11 @@ public:
 
 
 /* Core private functions */
+
+// check if BST is empty
+bool BST::isEmpty() {
+    return root == nullptr;
+}
 
 // insert a new node (recursive)
 Node* BST::insert(Node* node, Patient key) {
