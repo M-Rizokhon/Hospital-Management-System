@@ -33,7 +33,7 @@ public:
 		QueueNode* nextNode = nullptr;
 
 		while (current != Rear) {
-			nextNode = current;
+			nextNode = current->next;
 			delete current;
 			current = nextNode;
 		}
