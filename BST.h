@@ -27,9 +27,12 @@ private:
 	// < 0 means b has higher priority
 	int compare(const Patient& a, const Patient& b) const {
 		if (a.getSeverity() != b.getSeverity()) {
-			return a.getSeverity() - b.getSeverity();
+			return a.getSeverity() - b.getSeverity();  // higher severity first
 		}
-		return a.getID() - b.getID();
+		if (a.getArrivalTime() != b.getArrivalTime()) {
+			return b.getArrivalTime() - a.getArrivalTime();
+		}
+		return b.getID() - a.getID();
 	}
 
 	// insert
@@ -144,6 +147,14 @@ private:
 		cout << node->data.getPatientInfo() << endl;
 		inorder(node->right);
 	}
+	void reverseInorder(BSTNode* node) const {
+		if (!node) {
+			return;
+		}
+		reverseInorder(node->right);
+		cout << node->data.getPatientInfo() << endl;
+		reverseInorder(node->left);
+	}
 
 	void preorder(BSTNode* node) const {
 		if (!node) {
@@ -205,6 +216,10 @@ private:
 		}
 		void printPostorder() const {
 			postorder(root);
+			cout << endl;
+		}
+		void printDescending() const { 
+			reverseInorder(root); 
 			cout << endl;
 		}
 		void deletePatientRecord() {

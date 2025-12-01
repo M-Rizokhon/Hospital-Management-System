@@ -110,7 +110,7 @@ public:
 		ordinaryPatients.display();
 
 		std::cout << "\n===== Critical Patients (BST, Inorder) =====\n";
-		criticalPatients.printInorder();
+		criticalPatients.printDescending();
 	}
 
 	// display visit history

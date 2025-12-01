@@ -8,6 +8,7 @@ int main() {
     h.registerPatient("Zafar", 9);
     h.registerPatient("Farangiz", 7);
     h.registerPatient("Shahnoza", 10);
+    h.registerPatient("Sadriddin", 9);
 
     h.displayWaitingPatients();
 
