@@ -1,255 +1,129 @@
 #pragma once
-#include "Patient.h"
 #include <iostream>
+#include "Patient.h"
+#include "BST.h"
+#include "CircularQueue.h"
+#include "LinkedList.h"
 
-// Binary Search Tree for patients, ordered by (severity,id)
 
-// Node
-class BSTNode {
-public:
-	Patient data;
-	BSTNode* left;
-	BSTNode* right;
-
-	BSTNode(const Patient& data) {
-		this->data = data;
-		left = nullptr;
-		right = nullptr;
-	}
-};
-
-class BST {
+class Hospital {
 private:
-	BSTNode* root;
+	LinkedList history;
+	BST criticalPatients;
+	CircularQueue ordinaryPatients;
 
-	// Compare priority of two patients
-	// > 0 means a has higher priority
-	// < 0 means b has higher priority
-	int compare(const Patient& a, const Patient& b) const {
-		if (a.getSeverity() != b.getSeverity()) {
-			return a.getSeverity() - b.getSeverity();  // higher severity first
-		}
-		if (a.getArrivalTime() != b.getArrivalTime()) {
-			return b.getArrivalTime() - a.getArrivalTime();
-		}
-		return b.getID() - a.getID();
+	static const int CRITICAL_THRESHOLD = 9;
+
+	// helper : register into queue
+	void register_queue(const Patient& p) {
+		ordinaryPatients.enqueue(p);
+		cout << "[Reception] Ordinary patient registered in QUEUE." << endl;
 	}
 
-	// insert
-	BSTNode* insert(BSTNode* node, const Patient& key) {
-		if (!node) {
-			return new BSTNode(key);
-		}
-		int cmp = compare(key, node->data);
+	// helper : register into BST
+	void register_BST(const Patient& p) {
+		criticalPatients.insert(p);
+		cout << "[Reception] CRITICAL patient registered in BST." << endl;
+	}
 
-		if (cmp < 0) {
-			node->left = insert(node->left, key);
+	// helper : add to history
+	void add_to_history(const Patient& p) {
+		history.addHistory(p);
+	}
+
+	// helper : consult from BST 
+	bool consult_from_BST() {
+		if (criticalPatients.isEmpty()) {
+			return false;
 		}
-		else if (cmp > 0) {
-			node->right = insert(node->right, key);
+
+		Patient p;
+
+		if (!criticalPatients.getHighestPriority(p)) {
+			return false;
+		}
+
+		// remove from BST
+		criticalPatients.remove(p);
+
+		// Add to history
+		add_to_history(p);
+
+		cout << "\n[Doctor] Consulting CRITICAL patient:" << endl;
+		p.getInfo();
+
+		return true;
+	}
+	// helper : consult from queue
+	bool consult_from_queue() {
+		if (ordinaryPatients.isEmpty()) {
+			return false;
+		}
+		Patient p = ordinaryPatients.dequeue();
+		add_to_history(p);
+
+		cout<<"\n[Doctor] Consulting ordinary patient:"<<endl;
+		p.getInfo();
+		return true;
+	}
+
+public:
+	// default destructor
+	Hospital() = default;
+
+	// Registration 
+
+	// create Patient
+	void registerPatient(const string& name, int severity) {
+		Patient p(name, severity);
+		registerPatient(p); // overloading
+	}
+
+	void registerPatient(const Patient& p) {
+		if (p.getSeverity() >= CRITICAL_THRESHOLD) {
+			register_BST(p);
 		}
 		else {
-			// here we ignore
-		}
-		return node;
-	}
-
-	// search
-	BSTNode* search(BSTNode* node, const Patient& key) const {
-		if (!node) {
-			return nullptr;
-		}
-		int cmp = compare(key, node->data);
-
-		if (cmp == 0) {
-			return node;
-		}
-		else if (cmp < 0) {
-			return search(node->left, key);
-		}
-		else {
-			return search(node->right, key);
+			register_queue(p);
 		}
 	}
 
-	// find minimum
-	BSTNode* findMin(BSTNode* node) const {
-		if (!node) {
-			return nullptr;
-		}
-		while (node->left) {
-			node = node->left;
-		}
-		return node;
-	}
+	// Consulatation
 
-	// find maximum
-	BSTNode* findMax(BSTNode* node)const {
-		if (!node) {
-			return nullptr;
-		}
-		while (node->right) {
-			node = node->right;
-		}
-	}
-
-	// remove
-	BSTNode* remove(BSTNode* node, const Patient& key) {
-		if (!node) {
-			return nullptr;
-		}
-
-		int cmp = compare(key, node->data);
-
-		if (cmp < 0) {
-			node->left = remove(node->left, key);
-		}
-		else if (cmp > 0) {
-			node->right = remove(node->right, key);
-		}
-		else {
-
-			// case 1 : no children
-			if (!node->left && !node->right) {
-				delete node;
-				return nullptr;
-			}
-
-			// case 2: one child
-			else if (!node->left) {
-				BSTNode* temp = node->right;
-				delete node;
-				return temp;
-			}
-			else if (!node->right) {
-				BSTNode* temp = node->left;
-				delete node;
-				return temp;
-			}
-
-			// case 3: two children
-			else {
-				BSTNode* pred = findMax(node->left);
-				node->data = pred->data; // copy
-				node->left = remove(node->left, pred->data); // delete
-			}
-		}
-		return node;
-	}
-
-	// Travesals
-
-	void inorder(BSTNode* node) const {
-		if (!node) {
+	void consultNextPatient() {
+		// critical first
+		if (consult_from_BST()) {
 			return;
 		}
-		inorder(node->left);
-		cout << node->data.getPatientInfo() << endl;
-		inorder(node->right);
-	}
-	void reverseInorder(BSTNode* node) const {
-		if (!node) {
+
+		// then normal queue
+		if (consult_from_queue()) {
 			return;
 		}
-		reverseInorder(node->right);
-		cout << node->data.getPatientInfo() << endl;
-		reverseInorder(node->left);
+
+		cout << "\n[Doctor] No patients waiting." << endl;
 	}
 
-	void preorder(BSTNode* node) const {
-		if (!node) {
-			return;
-		}
-		cout << node->data.getPatientInfo() << endl;
-		preorder(node->left);
-		preorder(node->right);
+	// Display patients
+	void displayWaitingPatients() const {
+		std::cout << "\n===== Ordinary Patients (Queue, FIFO) =====\n";
+		ordinaryPatients.display();
+
+		std::cout << "\n===== Critical Patients (BST, Inorder) =====\n";
+		criticalPatients.printDescending();
 	}
 
-	void postorder(BSTNode* node) const {
-		if (!node) {
-			return;
-		}
-		postorder(node->left);
-		postorder(node->right);
-		cout << node->data.getPatientInfo() << endl;
-	}
-	
-	// destroy
-	void destroy(BSTNode* node) {
-		if (!node) {
-			return;
-		}
-		destroy(node->left);
-		destroy(node->right);
-		delete node;
+	// display visit history
+	void displayHistory() const {
+		std::cout << "\n===== Patient Visit History =====\n";
+		history.print();
+		std::cout << "=================================\n";
 	}
 
-	public:
-		// constructor
-		BST() {
-			root = nullptr;
-		}
-		// destructor
-		~BST() {
-			destroy(root);
-			root = nullptr;
-		}
-		bool isEmpty() const {
-			return root == nullptr;
-		}
-		void insert(const Patient& key) {
-			root = insert(root, key);
-		}
-		void remove(const Patient& key) {
-			root = remove(root, key);
-		}
-		bool search(const Patient& key) {
-			return search(root, key) != nullptr; // overloading
-		}
-		void printInorder() const {
-			inorder(root);
-			cout << endl;
-		}
-		void printPreorder() const {
-			preorder(root);
-			cout << endl;
-		}
-		void printPostorder() const {
-			postorder(root);
-			cout << endl;
-		}
-		void printDescending() const { 
-			reverseInorder(root); 
-			cout << endl;
-		}
-		void deletePatientRecord() {
-			if (!root) {
-				cout << "No patients in BST." << endl;
-				return;
-			}
+	// check anything is waiting
+	bool hasWaitingPatients() const {
+		return !criticalPatients.isEmpty() || !ordinaryPatients.isEmpty();
+	}
 
-			BSTNode* maxNode = findMax(root);
-			if (!maxNode) {
-				return;
-			}
 
-			Patient highest = maxNode->data;
-			cout << "Deleting highest priority patient from BST" << endl;
-			highest.getInfo();
-
-			root = remove(root, highest);
-		}
-
-		bool getHighestPriority(Patient& out) const {
-			if (!root) return false;
-			BSTNode* maxNode = findMax(root);
-			if (!maxNode) return false;
-			out = maxNode->data;
-			return true;
-		}
 };
-
-
-
-
-

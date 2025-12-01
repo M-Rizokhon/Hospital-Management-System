@@ -41,16 +41,6 @@ public:
 	void setName(string new_name) { name = new_name; }
 	void setSeverity(int sev) { severity = sev; }
 
-	// comparison for BST (priority)
-	// return true if THIS patient has higher priority
-
-	//bool higherPriorityThan(Patient other) {
-	//	if (severity != other.severity) {
-	//		return severity > other.severity;
-	//	}
-	//	return arrivalTime < other.arrivalTime;
-	//}
-
 	// getInfo
 	void getInfo() {
 		cout << "--- Patient Information ---" << endl;
