@@ -124,6 +124,4 @@ public:
 	bool hasWaitingPatients() const {
 		return (!criticalPatients.isEmpty() || !ordinaryPatients.isEmpty());
 	}
-
-
 };

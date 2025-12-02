@@ -249,8 +249,3 @@ public:
 		return true;
 	}
 };
-
-
-
-
-
