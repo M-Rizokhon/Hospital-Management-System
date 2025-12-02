@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include "Patient.h"
-using namespace std;
 
 
 class HistoryNode {

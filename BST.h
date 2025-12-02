@@ -30,7 +30,7 @@ private:
 			return a.getSeverity() - b.getSeverity();  // higher severity first
 		}
 		if (a.getArrivalTime() != b.getArrivalTime()) {
-			return b.getArrivalTime() - a.getArrivalTime();
+			return static_cast<int>(std::difftime(a.getArrivalTime(), b.getArrivalTime()));
 		}
 		return b.getID() - a.getID();
 	}
@@ -91,6 +91,7 @@ private:
 		while (node->right) {
 			node = node->right;
 		}
+		return node;
 	}
 
 	// remove
@@ -144,7 +145,7 @@ private:
 			return;
 		}
 		inorder(node->left);
-		cout << node->data.getPatientInfo() << endl;
+		std::cout << node->data.getPatientInfo() << std::endl;
 		inorder(node->right);
 	}
 	void reverseInorder(BSTNode* node) const {
@@ -152,7 +153,7 @@ private:
 			return;
 		}
 		reverseInorder(node->right);
-		cout << node->data.getPatientInfo() << endl;
+		std::cout << node->data.getPatientInfo() << std::endl;
 		reverseInorder(node->left);
 	}
 
@@ -160,7 +161,7 @@ private:
 		if (!node) {
 			return;
 		}
-		cout << node->data.getPatientInfo() << endl;
+		std::cout << node->data.getPatientInfo() << std::endl;
 		preorder(node->left);
 		preorder(node->right);
 	}
@@ -171,9 +172,9 @@ private:
 		}
 		postorder(node->left);
 		postorder(node->right);
-		cout << node->data.getPatientInfo() << endl;
+		std::cout << node->data.getPatientInfo() << std::endl;
 	}
-	
+
 	// destroy
 	void destroy(BSTNode* node) {
 		if (!node) {
@@ -184,69 +185,69 @@ private:
 		delete node;
 	}
 
-	public:
-		// constructor
-		BST() {
-			root = nullptr;
-		}
-		// destructor
-		~BST() {
-			destroy(root);
-			root = nullptr;
-		}
-		bool isEmpty() const {
-			return root == nullptr;
-		}
-		void insert(const Patient& key) {
-			root = insert(root, key);
-		}
-		void remove(const Patient& key) {
-			root = remove(root, key);
-		}
-		bool search(const Patient& key) {
-			return search(root, key) != nullptr; // overloading
-		}
-		void printInorder() const {
-			inorder(root);
-			cout << endl;
-		}
-		void printPreorder() const {
-			preorder(root);
-			cout << endl;
-		}
-		void printPostorder() const {
-			postorder(root);
-			cout << endl;
-		}
-		void printDescending() const { 
-			reverseInorder(root); 
-			cout << endl;
-		}
-		void deletePatientRecord() {
-			if (!root) {
-				cout << "No patients in BST." << endl;
-				return;
-			}
-
-			BSTNode* maxNode = findMax(root);
-			if (!maxNode) {
-				return;
-			}
-
-			Patient highest = maxNode->data;
-			cout << "Deleting highest priority patient from BST" << endl;
-			highest.getInfo();
-
-			root = remove(root, highest);
+public:
+	// constructor
+	BST() {
+		root = nullptr;
+	}
+	// destructor
+	~BST() {
+		destroy(root);
+		root = nullptr;
+	}
+	bool isEmpty() const {
+		return root == nullptr;
+	}
+	void insert(const Patient& key) {
+		root = insert(root, key);
+	}
+	void remove(const Patient& key) {
+		root = remove(root, key);
+	}
+	bool search(const Patient& key) {
+		return search(root, key) != nullptr; // overloading
+	}
+	void printInorder() const {
+		inorder(root);
+		std::cout << std::endl;
+	}
+	void printPreorder() const {
+		preorder(root);
+		std::cout << std::endl;
+	}
+	void printPostorder() const {
+		postorder(root);
+		std::cout << std::endl;
+	}
+	void printDescending() const {
+		reverseInorder(root);
+		std::cout << std::endl;
+	}
+	void deletePatientRecord() {
+		if (!root) {
+			std::cout << "No patients in BST." << std::endl;
+			return;
 		}
 
-		bool getHighestPriority(Patient& out) const {
-			if (!root) return false;
-			BSTNode* maxNode = findMax(root);
-			if (!maxNode) return false;
-			out = maxNode->data;
-			return true;
+		BSTNode* maxNode = findMax(root);
+		if (!maxNode) {
+			return;
 		}
+
+		Patient highest = maxNode->data;
+		std::cout << "Deleting highest priority patient from BST" << std::endl;
+		highest.getInfo();
+
+		root = remove(root, highest);
+	}
+
+	bool getHighestPriority(Patient& out) const {
+		if (!root) return false;
+		BSTNode* maxNode = findMax(root);
+		if (!maxNode) return false;
+		out = maxNode->data;
+		return true;
+	}
 };
 
 

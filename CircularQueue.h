@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include "Patient.h"
-using namespace std;
 
 // QueueNode for circular linked queue
 class QueueNode {
@@ -9,7 +8,7 @@ public:
 	Patient data;
 	QueueNode* next;
 
-	QueueNode(const Patient &p) {
+	QueueNode(const Patient& p) {
 		data = p;
 		next = nullptr;
 	}
@@ -17,7 +16,7 @@ public:
 // CircularQueue
 class CircularQueue {
 private:
-	QueueNode* Rear; 
+	QueueNode* Rear;
 public:
 	// constructor
 	CircularQueue() {
@@ -43,7 +42,7 @@ public:
 	}
 
 	//isEmpty
-	bool isEmpty() const{
+	bool isEmpty() const {
 		return Rear == nullptr;
 	}
 
@@ -65,7 +64,7 @@ public:
 	// dequeue
 	Patient dequeue() {
 		if (isEmpty()) {
-			cout << "Queue is Empty" << endl;
+			std::cout << "Queue is Empty" << std::endl;
 			return Patient();
 		}
 
@@ -87,7 +86,7 @@ public:
 	// Display
 	void display() const {
 		if (isEmpty()) {
-			cout << "Queue is Empty." << endl;
+			std::cout << "Queue is Empty." << std::endl;
 			return;
 		}
 		QueueNode* current = Rear->next; // start from front
@@ -100,7 +99,7 @@ public:
 	// getFront
 	Patient getFront() const {
 		if (isEmpty()) {
-			cout << "Queue is Empty" << endl;
+			std::cout << "Queue is Empty" << std::endl;
 			return Patient();
 		}
 		return Rear->next->data;
@@ -109,7 +108,7 @@ public:
 	// getRear
 	Patient getRear() const {
 		if (isEmpty()) {
-			cout << "Queue is Empty" << endl;
+			std::cout << "Queue is Empty" << std::endl;
 			return Patient();
 		}
 		return Rear->data;

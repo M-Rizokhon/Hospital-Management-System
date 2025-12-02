@@ -1,61 +1,84 @@
 #pragma once
 #include <string>
 #include <iostream>
-using namespace std;
+#include <ctime>
+
 
 // implementation of a patient class
-
 class Patient {
 
 private:
-	
-	string name;
-	int severity;
-	int id;
-	long long arrivalTime; 
-	static int SerializeID;
+
+	std::string name;  
+	int severity;    // severity of illness (1-10)
+	int id;          // specific patient ID
+	std::string arrivalTime;  
+	time_t arrivalTimeT;
+	static int SerializeID;     // static variable to assign ID for patients
+
+
+
+	// get the current time
+	std::string getCurrentTime() {
+		std::time_t now = std::time(nullptr);   // get current time
+		char buffer[26];
+		ctime_s(buffer, sizeof(buffer), &now);      // convert it to string safely
+		std::string timeStr(buffer);
+
+		// remove a newline at the end of string
+		if (!timeStr.empty() && timeStr.back() == '\n') {
+			timeStr.pop_back();
+		}
+
+		return timeStr;
+	}
+
 
 public:
 
-	// constructor
-	Patient(string name, int severity) {
+	// parametrized constructor
+	Patient(std::string name, int severity) {
 		this->name = name;
 		this->severity = severity;
 		SerializeID++;
 		this->id = SerializeID;
+		arrivalTimeT = std::time(nullptr);
 
-		arrivalTime = time(nullptr);
+		arrivalTime = getCurrentTime();
 	}
+
 
 	// default constructor
-	Patient() : name(""), severity(0), id(-1), arrivalTime(0) {}
+	Patient() : name(""), severity(0), id(-1), arrivalTime(""), arrivalTimeT(std::time(nullptr)) {}
 
 
-	// getter and setter
-	string getName() const { return name; }
+	// getter methods
+	std::string getName() const { return name; }
 	int getID() const { return id; }
 	int getSeverity() const { return severity; }
-	long long getArrivalTime() const { return arrivalTime; }
+	time_t getArrivalTime() const { return arrivalTimeT; }
 
-	// setter
-	void setName(string new_name) { name = new_name; }
+
+	// setter methods
+	void setName(std::string new_name) { name = new_name; }
 	void setSeverity(int sev) { severity = sev; }
 
-	// getInfo
-	void getInfo() {
-		cout << "--- Patient Information ---" << endl;
-		cout << "ID:        " << id << endl;
-		cout << "Name:      " << name << endl;
-		cout << "Severity:  " << severity << endl;
-		cout << "Arrived:   " << arrivalTime << endl;
-		cout << "---------------------------" << endl;
+	// print patient info to the console
+	void getInfo() const {
+		std::cout << "--- Patient Information ---" << std::endl;
+		std::cout << "ID:        " << id << std::endl;
+		std::cout << "Name:      " << name << std::endl;
+		std::cout << "Severity:  " << severity << std::endl;
+		std::cout << "Arrived:   " << arrivalTime << std::endl;
+		std::cout << "---------------------------" << std::endl;
 	}
 
-	string getPatientInfo() {
-		return "ID: " + to_string(id) +
+	std::string getPatientInfo() const {
+		return "ID: " + std::to_string(id) +
 			", Name: " + name +
-			", Severity: " + to_string(severity) +
-			", Arrival: " + to_string(arrivalTime);
+			", Severity: " + std::to_string(severity) +
+			", Arrival: " + arrivalTime;
 	}
 };
+
 int Patient::SerializeID = 0;

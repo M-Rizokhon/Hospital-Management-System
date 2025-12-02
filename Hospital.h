@@ -17,13 +17,13 @@ private:
 	// helper : register into queue
 	void register_queue(const Patient& p) {
 		ordinaryPatients.enqueue(p);
-		cout << "[Reception] Ordinary patient registered in QUEUE." << endl;
+		std::cout << "[Reception] Ordinary patient registered in QUEUE." << std::endl;
 	}
 
 	// helper : register into BST
 	void register_BST(const Patient& p) {
 		criticalPatients.insert(p);
-		cout << "[Reception] CRITICAL patient registered in BST." << endl;
+		std::cout << "[Reception] CRITICAL patient registered in BST." << std::endl;
 	}
 
 	// helper : add to history
@@ -49,7 +49,7 @@ private:
 		// Add to history
 		add_to_history(p);
 
-		cout << "\n[Doctor] Consulting CRITICAL patient:" << endl;
+		std::cout << "\n[Doctor] Consulting CRITICAL patient:" << std::endl;
 		p.getInfo();
 
 		return true;
@@ -62,7 +62,7 @@ private:
 		Patient p = ordinaryPatients.dequeue();
 		add_to_history(p);
 
-		cout<<"\n[Doctor] Consulting ordinary patient:"<<endl;
+		std::cout << "\n[Doctor] Consulting ordinary patient:" << std::endl;
 		p.getInfo();
 		return true;
 	}
@@ -74,7 +74,7 @@ public:
 	// Registration 
 
 	// create Patient
-	void registerPatient(const string& name, int severity) {
+	void registerPatient(const std::string& name, int severity) {
 		Patient p(name, severity);
 		registerPatient(p); // overloading
 	}
@@ -101,7 +101,7 @@ public:
 			return;
 		}
 
-		cout << "\n[Doctor] No patients waiting." << endl;
+		std::cout << "\n[Doctor] No patients waiting." << std::endl;
 	}
 
 	// Display patients
@@ -122,7 +122,7 @@ public:
 
 	// check anything is waiting
 	bool hasWaitingPatients() const {
-		return !criticalPatients.isEmpty() || !ordinaryPatients.isEmpty();
+		return (!criticalPatients.isEmpty() || !ordinaryPatients.isEmpty());
 	}
 
 
