@@ -91,6 +91,7 @@ private:
 		while (node->right) {
 			node = node->right;
 		}
+		return node;
 	}
 
 	// remove
