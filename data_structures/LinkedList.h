@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "Patient.h"
+#include "../Patient.h"
 
 
 class HistoryNode {

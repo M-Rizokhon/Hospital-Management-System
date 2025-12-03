@@ -1,5 +1,5 @@
 #pragma once
-#include "Patient.h"
+#include "../Patient.h"
 #include <iostream>
 
 // Binary Search Tree for patients, ordered by (severity,id)

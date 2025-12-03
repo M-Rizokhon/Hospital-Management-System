@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "Patient.h"
+#include "../Patient.h"
 
 // QueueNode for circular linked queue
 class QueueNode {
