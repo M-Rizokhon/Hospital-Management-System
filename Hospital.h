@@ -1,10 +1,10 @@
 #pragma once
 #include <iostream>
 #include "Patient.h"
-#include "../BST.h"
-#include "../CircularQueue.h"
-#include "../LinkedList.h"
-#include "../Hash_map.h"
+#include "data_structures/BST.h"
+#include "data_structures/CircularQueue.h"
+#include "data_structures/LinkedList.h"
+#include "data_structures/Hash_map.h"
 
 class Hospital {
 private:
