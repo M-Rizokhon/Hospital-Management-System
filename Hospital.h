@@ -115,6 +115,13 @@ bool Hospital::consult_from_BST() {
 
     p.setTreated();
 
+        // Update the stored patient record in the hashmap so searchPatient sees treated status
+    BSTNode node = patientList.get(p.getID());
+    if (node.data.getID() == p.getID()) {
+        node.data.setTreated();
+        patientList.insert(p.getID(), node);
+    }
+
     return true;
 }
 
@@ -129,6 +136,13 @@ bool Hospital::consult_from_queue() {
 
     p.setTreated();
 
+    // Update the stored patient record in the hashmap so searchPatient sees treated status
+    BSTNode node = patientList.get(p.getID());
+    if (node.data.getID() == p.getID()) {
+        node.data.setTreated();
+        patientList.insert(p.getID(), node);
+    }
+
     return true;
 }
 
@@ -141,7 +155,7 @@ void Hospital::registerPatient(const std::string& name, int severity, std::strin
     else {
         register_queue(p);
     }
-    patientList.insert(p.getID(), p);
+    patientList.insert(p.getID(), BSTNode(p));
 }
 
 
